@@ -1,6 +1,6 @@
-import { LatLngTuple } from 'leaflet';
+export type TCoorTuple = [number, number];
 
 export type TSubmit = (
-  val: LatLngTuple | string,
+  val: TCoorTuple | string,
   model: 'coor' | 'normal',
 ) => void;

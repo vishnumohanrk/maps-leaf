@@ -7,9 +7,10 @@ import {
   InputRightElement,
 } from '@chakra-ui/core';
 import React, { useState } from 'react';
-import { MdGpsFixed, MdSearch } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 
-import { TSubmit } from '../utils/models';
+import { TCoorTuple, TSubmit } from '../utils/models';
+import UserLocation from './UserLocation';
 
 interface InputFormCompProps {
   handleSubmit: TSubmit;
@@ -23,10 +24,10 @@ const InputForm: React.FC<InputFormCompProps> = ({ handleSubmit }) => {
 
   const onSubmit = () => {
     if (value) {
-      const splitted = value.split(',').map(Number).slice(0, 2);
+      const splitted = value.split(/,/g).map(Number).slice(0, 2);
 
-      if (splitted.every(i => typeof i === 'number')) {
-        handleSubmit(splitted as [number, number], 'coor');
+      if (splitted.every(i => !isNaN(i))) {
+        handleSubmit(splitted as TCoorTuple, 'coor');
         return;
       }
 
@@ -45,13 +46,7 @@ const InputForm: React.FC<InputFormCompProps> = ({ handleSubmit }) => {
       zIndex={9999}
     >
       <InputLeftElement>
-        <IconButton
-          variant="ghost"
-          icon={<Icon as={MdGpsFixed} color={'gray.700'} />}
-          aria-label="Show My Location"
-          title="Show My Location"
-          onClick={console.log}
-        />
+        <UserLocation setLoc={handleSubmit} />
       </InputLeftElement>
       <Input
         bgColor="white"

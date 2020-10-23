@@ -4,18 +4,18 @@ import React, { useState } from 'react';
 import InputForm from '../src/components/InputForm';
 import MetaHead from '../src/components/MetaHead';
 import { defaultCoor } from '../src/utils/constants';
-import { TSubmit } from '../src/utils/models';
+import { TCoorTuple, TSubmit } from '../src/utils/models';
 
 const ClientSideMap = dynamic(() => import('../src/components/BaseMap'), {
   ssr: false,
 });
 
 const AppHome: React.FC = () => {
-  const [position, setPosition] = useState(defaultCoor);
+  const [position, setPosition] = useState<TCoorTuple>(defaultCoor);
 
   const handleSubmit: TSubmit = (value, model) => {
     if (model === 'coor') {
-      setPosition(value as [number, number]);
+      setPosition(value as TCoorTuple);
     }
   };
 
