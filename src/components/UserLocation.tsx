@@ -12,10 +12,19 @@ const UserLocation: React.FC<UserLocationCompProps> = ({ setLoc }) => {
   const toast = useToast();
 
   const handleClick = () => {
+    toast.closeAll();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) =>
-          setLoc([latitude, longitude] as TCoorTuple, 'coor'),
+        ({ coords: { latitude, longitude } }) => {
+          setLoc([latitude, longitude] as TCoorTuple, 'coor');
+          toast({
+            title: 'Your Current Location',
+            description: `Latitude: ${latitude}, Longitude: ${longitude}`,
+            status: 'info',
+            duration: 5000,
+            isClosable: true,
+          });
+        },
         error =>
           toast({
             title: 'An error occurred.',
