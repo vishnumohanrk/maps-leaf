@@ -1,5 +1,6 @@
+import { useToast } from '@chakra-ui/core';
 import dynamic from 'next/dynamic';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import InputForm from '../src/components/InputForm';
 import MetaHead from '../src/components/MetaHead';
@@ -12,6 +13,9 @@ const ClientSideMap = dynamic(() => import('../src/components/BaseMap'), {
 
 const AppHome: React.FC = () => {
   const [position, setPosition] = useState<TCoorTuple>(defaultCoor);
+
+  const toast = useToast();
+  useEffect(() => toast.closeAll(), [position, toast]);
 
   const handleSubmit: TSubmit = (value, model) => {
     if (model === 'coor') {

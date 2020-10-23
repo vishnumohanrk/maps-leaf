@@ -43,6 +43,7 @@ const BaseMap: React.FC<BaseMapCompProps> = ({ position, updatePosition }) => {
       zoomControl={false}
       oncontextmenu={triggerCtxMenu}
       onclick={turnOffCtxMenu}
+      onmovestart={turnOffCtxMenu}
       style={{ width: '100vw', height: '100vh' }}
     >
       <ContextMenu event={mapE} isVisible={isCtxMenuVisible} />
