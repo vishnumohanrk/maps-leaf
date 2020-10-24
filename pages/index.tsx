@@ -4,7 +4,7 @@ import React, { useEffect, useReducer } from 'react';
 
 import MetaHead from '../src/components/MetaHead';
 import { defaultCoor } from '../src/utils/constants';
-import { latLngDescription } from '../src/utils/helperFns';
+import { simpleCoorToast } from '../src/utils/helperFns';
 import { initialState, myReducer } from '../src/utils/myReducer';
 
 const MapComp = dynamic(() => import('../src/components/map/ClientMap'), {
@@ -18,12 +18,7 @@ const AppHome: React.FC = () => {
   useEffect(() => {
     if (state.markerLocation !== defaultCoor) {
       toast.closeAll();
-      toast({
-        description: latLngDescription(state.markerLocation),
-        status: 'info',
-        duration: 5000,
-        isClosable: true,
-      });
+      toast(simpleCoorToast(state.markerLocation));
     }
   }, [toast, state.markerLocation]);
 
