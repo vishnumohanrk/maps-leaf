@@ -1,34 +1,36 @@
 import { useToast } from '@chakra-ui/core';
 import dynamic from 'next/dynamic';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 
-import InputForm from '../src/components/InputForm';
 import MetaHead from '../src/components/MetaHead';
 import { defaultCoor } from '../src/utils/constants';
-import { TCoorTuple, TSubmit } from '../src/utils/models';
+import { latLngDescription } from '../src/utils/helperFns';
+import { initialState, myReducer } from '../src/utils/myReducer';
 
-const ClientSideMap = dynamic(() => import('../src/components/BaseMap'), {
+const MapComp = dynamic(() => import('../src/components/map/ClientMap'), {
   ssr: false,
 });
 
 const AppHome: React.FC = () => {
-  const [position, setPosition] = useState<TCoorTuple>(defaultCoor);
-
+  const [state, dispatch] = useReducer(myReducer, initialState);
   const toast = useToast();
-  useEffect(() => toast.closeAll(), [position, toast]);
 
-  const handleSubmit: TSubmit = (value, model) => {
-    if (model === 'coor') {
-      setPosition(value as TCoorTuple);
+  useEffect(() => {
+    if (state.markerLocation !== defaultCoor) {
+      toast.closeAll();
+      toast({
+        description: latLngDescription(state.markerLocation),
+        status: 'info',
+        duration: 5000,
+        isClosable: true,
+      });
     }
-  };
+  }, [toast, state.markerLocation]);
 
   return (
     <>
       <MetaHead />
-
-      <InputForm handleSubmit={handleSubmit} />
-      <ClientSideMap position={position} updatePosition={setPosition} />
+      <MapComp dispatch={dispatch} state={state} />
     </>
   );
 };

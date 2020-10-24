@@ -1,3 +1,11 @@
+import { TooltipProps } from '@chakra-ui/core';
+
 import { TCoorTuple } from './models';
 
-export const defaultCoor: TCoorTuple = [11.6147045, 79.4880503];
+export const defaultCoor: TCoorTuple = [12.962496, 80.197296];
+
+export const toolTipProps: Omit<TooltipProps, 'children'> = {
+  hasArrow: true,
+  placement: 'left-start',
+  zIndex: 9999,
+};
