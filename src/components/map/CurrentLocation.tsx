@@ -3,25 +3,29 @@ import React from 'react';
 import { MdGpsFixed } from 'react-icons/md';
 
 import { toolTipProps } from '../../utils/constants';
+import { TCoorTuple } from '../../utils/models';
 import { TDispatch } from '../../utils/myReducer';
 
 interface CurrentLocationCompProps {
   dispatch: TDispatch;
+  moveMapTo: (val: TCoorTuple) => void;
 }
 
 const CurrentLocation: React.FC<CurrentLocationCompProps> = props => {
-  const { dispatch } = props;
+  const { dispatch, moveMapTo } = props;
   const toast = useToast();
 
   const handleClick = () => {
     toast.closeAll();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude: lat, longitude: lng } }) =>
+        ({ coords: { latitude: lat, longitude: lng } }) => {
           dispatch({
             type: 'setUserLocation',
             payload: [lat, lng],
           }),
+            moveMapTo([lat, lng]);
+        },
         ({ message: description }) =>
           toast({
             status: 'error',

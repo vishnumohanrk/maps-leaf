@@ -60,6 +60,13 @@ const ClientMap: React.FC<ClientMapCompProps> = props => {
     }
   };
 
+  const moveMapTo = (val: TCoorTuple) => {
+    const mapElem = mapRef.current;
+    if (mapElem) {
+      mapElem.leafletElement.flyTo(val, 10);
+    }
+  };
+
   return (
     <>
       <Map
@@ -88,7 +95,7 @@ const ClientMap: React.FC<ClientMapCompProps> = props => {
       </Map>
 
       <CustomControls
-        currLoc={<CurrentLocation dispatch={dispatch} />}
+        currLoc={<CurrentLocation moveMapTo={moveMapTo} dispatch={dispatch} />}
         zoomBtns={<ZoomBtns zoom={zoom} />}
       />
       {mapE && <ContextMenu eventObj={mapE} trigger={updateMiniMarker} />}
