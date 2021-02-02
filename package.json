@@ -1,38 +1,42 @@
 {
-  "name": "google-maps-clone",
+  "name": "my-next-starter",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"**/*.+(ts|js|tsx)\"",
+    "format": "prettier --ignore-path .gitignore \"**/*.+(ts|js|tsx)\" --write",
+    "fun": "yarn type-check && yarn format && yarn lint"
   },
   "dependencies": {
-    "@chakra-ui/core": "^1.0.0-rc.5",
+    "@react-md/portal": "^2.5.0",
     "leaflet": "^1.7.1",
-    "next": "9.5.5",
+    "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-icons": "^3.11.0",
-    "react-leaflet": "^2.8.0"
+    "react-leaflet": "^3.1.0"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.5.19",
-    "@types/node": "^14.14.2",
-    "@types/react": "^16.9.53",
-    "@types/react-leaflet": "^2.5.2",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "eslint": "^7.11.0",
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.21.5",
+    "@types/leaflet": "^1.5.21",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "autoprefixer": "^10.2.4",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-simple-import-sort": "^5.0.3",
-    "prettier": "^2.1.2",
-    "typescript": "^4.0.3"
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "postcss": "^8.2.4",
+    "prettier": "^2.2.1",
+    "tailwindcss": "^2.0.2",
+    "typescript": "^4.1.3"
   }
 }

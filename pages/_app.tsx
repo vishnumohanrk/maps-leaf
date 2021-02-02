@@ -1,11 +1,8 @@
-import { ChakraProvider } from '@chakra-ui/core';
-import { AppProps } from 'next/app';
-import React from 'react';
+import 'tailwindcss/tailwind.css';
+import '../styles/app.css';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => (
-  <ChakraProvider>
-    <Component {...pageProps} />
-  </ChakraProvider>
-);
+import { AppProps } from 'next/app';
+
+const MyApp = ({ Component, pageProps }: AppProps) => <Component {...pageProps} />;
 
 export default MyApp;

@@ -1,0 +1,3 @@
+.zoomBtnGroup:focus-within .zoomBtnGroupTT {
+  display: flex;
+}
