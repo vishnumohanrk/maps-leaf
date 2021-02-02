@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { iconBtnClass } from '../utils';
 import IcoLocation from './icons/IcoLocation';
@@ -24,6 +24,12 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
     setValue(newVal);
     mapZoom(newVal);
   };
+
+  useEffect(() => {
+    if (zoomLevel !== value) {
+      setValue(zoomLevel);
+    }
+  }, [zoomLevel]);
 
   return (
     <div
@@ -64,7 +70,7 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
           step={1}
           value={value}
           onChange={handleSlider}
-          className={`transform -rotate-90 transition-height duration-700 ease-linear ${show ? 'h-36' : 'h-0'}`}
+          className="absolute -bottom-8 -left-11 md:bottom-24 lg:-left-12 transform -rotate-90"
         />
 
         <button
