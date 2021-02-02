@@ -1,8 +1,8 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 interface MyToolTipProps {
   text: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   cls?: string;
   styles?: CSSProperties;
 }

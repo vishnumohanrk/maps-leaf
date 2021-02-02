@@ -11,7 +11,7 @@ interface MyMapEventsProps {
 const MyMapEvents = ({ router }: MyMapEventsProps) => {
   const { replace } = router;
   const map = useMapEvents({
-    zoom() {
+    zoomend() {
       updateDets();
     },
     moveend() {
@@ -28,9 +28,11 @@ const MyMapEvents = ({ router }: MyMapEventsProps) => {
   const zoomIn = () => map.zoomIn();
   const zoomOut = () => map.zoomOut();
 
+  const z = (n: number) => map.flyTo(map.getCenter(), n);
+
   return (
     <Portal intoId="__next">
-      <MyMapControls zoomLevel={map.getZoom()} zoomIn={zoomIn} zoomOut={zoomOut} />
+      <MyMapControls zoomLevel={map.getZoom()} mapZoom={z} zoomIn={zoomIn} zoomOut={zoomOut} />
     </Portal>
   );
 };

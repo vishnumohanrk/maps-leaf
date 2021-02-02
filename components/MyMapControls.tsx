@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { iconBtnClass } from '../utils';
 import IcoLocation from './icons/IcoLocation';
@@ -10,12 +10,20 @@ interface MyMapControlsProps {
   zoomIn: () => void;
   zoomOut: () => void;
   zoomLevel: number;
+  mapZoom: (n: number) => void;
 }
 
-const MyMapControls = ({ zoomIn, zoomOut, zoomLevel }: MyMapControlsProps) => {
+const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsProps) => {
   const [show, setShow] = useState(false);
+  const [value, setValue] = useState(zoomLevel);
 
   const toggle = () => setShow(!show);
+
+  const handleSlider = (e: ChangeEvent<HTMLInputElement>) => {
+    const newVal = Number(e.currentTarget.value);
+    setValue(newVal);
+    mapZoom(newVal);
+  };
 
   return (
     <div
@@ -49,7 +57,15 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel }: MyMapControlsProps) => {
           </button>
         </MyToolTip>
 
-        <div className={`transition-height duration-700 ease-linear ${show ? 'h-36' : 'h-0'}`} />
+        <input
+          type="range"
+          min={0}
+          max={18}
+          step={1}
+          value={value}
+          onChange={handleSlider}
+          className={`transform -rotate-90 transition-height duration-700 ease-linear ${show ? 'h-36' : 'h-0'}`}
+        />
 
         <button
           onClick={zoomOut}
