@@ -41,7 +41,7 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
         <MyToolTip text="Your Location" cls="left-10 md:-left-7.3rem" />
       </button>
 
-      <div className="flex flex-col group zoomBtnGroup">
+      <div className="flex flex-col group zoomBtnGroup overflow-hidden">
         <button
           onClick={zoomIn}
           aria-label="zoom in"
@@ -53,8 +53,8 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
 
         <MyToolTip
           text="Zoom"
-          cls={`flex-col h-14 zoomBtnGroupTT transition-top duration-700 ease-linear left-10 md:-left-6.45rem ${
-            show ? 'top-14 md:top-12.5rem lg:top-48' : 'top-14 lg:top-12'
+          cls={`flex-col h-14 zoomBtnGroupTT left-10 md:-left-6.45rem ${
+            show ? 'top-14 md:top-11.5rem lg:top-44' : 'top-14 lg:top-12'
           }`}
           styles={{ alignItems: 'flex-start' }}
         >
@@ -63,15 +63,17 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
           </button>
         </MyToolTip>
 
-        <input
-          type="range"
-          min={0}
-          max={18}
-          step={1}
-          value={value}
-          onChange={handleSlider}
-          className="absolute -bottom-8 -left-11 md:bottom-24 lg:-left-12 transform -rotate-90"
-        />
+        <div className={`flex w-8 transform translate-y-12 -rotate-90 ${show ? 'h-32' : 'h-0'}`}>
+          <input
+            type="range"
+            min={0}
+            max={18}
+            step={1}
+            value={value}
+            onChange={handleSlider}
+            className={show ? 'block mt-2 lg:mt-0' : 'hidden'}
+          />
+        </div>
 
         <button
           onClick={zoomOut}
