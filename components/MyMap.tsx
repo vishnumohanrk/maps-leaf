@@ -18,7 +18,7 @@ const MyMap = () => {
   }, []);
 
   return (
-    <MapContainer className="h-screen w-screen" center={coordinates} zoomControl={false} zoom={zoomLevel}>
+    <MapContainer style={{ width: '100vw', height: '100vh' }} center={coordinates} zoomControl={false} zoom={zoomLevel}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

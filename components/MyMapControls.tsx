@@ -1,10 +1,18 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-
-import { iconBtnClass } from '../utils';
-import IcoLocation from './icons/IcoLocation';
-import IcoMinus from './icons/IcoMinus';
-import IcoPlus from './icons/IcoPlus';
-import MyToolTip from './MyToolTip';
+import {
+  Box,
+  Button,
+  Flex,
+  IconButton,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Text,
+  Tooltip,
+  useBreakpointValue,
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { MdAdd, MdGpsFixed, MdRemove } from 'react-icons/md';
 
 interface MyMapControlsProps {
   zoomIn: () => void;
@@ -14,13 +22,13 @@ interface MyMapControlsProps {
 }
 
 const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsProps) => {
-  const [show, setShow] = useState(false);
+  const [showSlider, setShowSlider] = useState(false);
   const [value, setValue] = useState(zoomLevel);
+  const ttPlacement = useBreakpointValue({ base: 'right', md: 'left' }) as 'left' | 'right';
 
-  const toggle = () => setShow(!show);
+  const toggleSlider = () => setShowSlider(!showSlider);
 
-  const handleSlider = (e: ChangeEvent<HTMLInputElement>) => {
-    const newVal = Number(e.currentTarget.value);
+  const handleSlider = (newVal: number) => {
     setValue(newVal);
     mapZoom(newVal);
   };
@@ -32,59 +40,78 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
   }, [zoomLevel]);
 
   return (
-    <div
-      className="flex flex-col absolute top-2 left-2 md:top-auto md:left-auto md:bottom-7 md:right-4"
-      style={{ zIndex: 999 }}
+    <Flex
+      direction="column"
+      position="absolute"
+      top={{ base: 2, md: 'auto' }}
+      left={{ base: 2, md: 'auto' }}
+      bottom={{ md: 7 }}
+      right={{ md: 4 }}
+      zIndex={999}
     >
-      <button aria-label="your location" className={`${iconBtnClass} rounded-md mb-2 relative group`}>
-        <IcoLocation />
-        <MyToolTip text="Your Location" cls="left-10 md:-left-7.3rem" />
-      </button>
+      <Tooltip gutter={1.5} label="Your Location" placement={ttPlacement}>
+        <IconButton bgColor="white" aria-label="your location" icon={<MdGpsFixed size={20} />} mb={2} />
+      </Tooltip>
 
-      <div className="flex flex-col group zoomBtnGroup overflow-hidden">
-        <button
-          onClick={zoomIn}
-          aria-label="zoom in"
+      <Flex direction="column" className="zoomBtnGroup">
+        <IconButton
+          bgColor="white"
+          aria-label="Zoom in"
+          icon={<MdAdd size={20} />}
           disabled={zoomLevel === 18}
-          className={`${iconBtnClass} rounded-t-md border-b-2 border-gray-300`}
-        >
-          <IcoPlus />
-        </button>
+          onClick={zoomIn}
+          borderBottomRadius={0}
+          borderBottomWidth={showSlider ? 0 : 3}
+          borderBottomColor="gray.300"
+        />
 
-        <MyToolTip
-          text="Zoom"
-          cls={`flex-col h-14 zoomBtnGroupTT left-10 md:-left-6.45rem ${
-            show ? 'top-14 md:top-11.5rem lg:top-44' : 'top-14 lg:top-12'
-          }`}
-          styles={{ alignItems: 'flex-start' }}
+        <Box
+          p={2}
+          display="none"
+          className="zoomBtnGroupTT"
+          flexDirection="column"
+          position="absolute"
+          w="max-content"
+          bgColor="gray.700"
+          textColor="white"
+          borderRadius="2px"
+          left={{ base: '2.5rem', md: '-6.95rem' }}
+          top={{ base: 14, md: showSlider ? '12.5rem' : 14 }}
         >
-          <button className="underline text-blue-500" onClick={toggle}>
-            Show slider
-          </button>
-        </MyToolTip>
+          <Text>Zoom</Text>
+          <Button onClick={toggleSlider} variant="link" textDecoration="underline" textColor="blue.500">
+            Toggle Slider
+          </Button>
+        </Box>
 
-        <div className={`flex w-8 transform translate-y-12 -rotate-90 ${show ? 'h-32' : 'h-0'}`}>
-          <input
-            type="range"
-            min={0}
+        {showSlider ? (
+          <Slider
             max={18}
+            min={0}
             step={1}
             value={value}
             onChange={handleSlider}
-            className={show ? 'block mt-2 lg:mt-0' : 'hidden'}
-          />
-        </div>
+            aria-label="zoom-slider"
+            orientation="vertical"
+            h={36}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        ) : null}
 
-        <button
-          onClick={zoomOut}
-          aria-label="zoom out"
+        <IconButton
+          bgColor="white"
+          aria-label="Zoom out"
+          icon={<MdRemove size={20} />}
           disabled={zoomLevel === 0}
-          className={`${iconBtnClass} rounded-b-md`}
-        >
-          <IcoMinus />
-        </button>
-      </div>
-    </div>
+          onClick={zoomOut}
+          borderTopRadius={0}
+        />
+      </Flex>
+    </Flex>
   );
 };
 

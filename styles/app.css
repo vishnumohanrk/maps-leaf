@@ -1,3 +1,7 @@
 .zoomBtnGroup:focus-within .zoomBtnGroupTT {
   display: flex;
 }
+
+.zoomBtnGroup:hover .zoomBtnGroupTT {
+  display: flex;
+}

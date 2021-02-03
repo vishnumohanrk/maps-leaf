@@ -1,4 +1,4 @@
-import { Portal } from '@react-md/portal';
+import { Portal } from '@chakra-ui/react';
 import { NextRouter } from 'next/router';
 import { useMapEvents } from 'react-leaflet';
 
@@ -31,8 +31,8 @@ const MyMapEvents = ({ router }: MyMapEventsProps) => {
   const z = (n: number) => map.flyTo(map.getCenter(), n);
 
   return (
-    <Portal intoId="__next">
-      <MyMapControls zoomLevel={map.getZoom()} mapZoom={z} zoomIn={zoomIn} zoomOut={zoomOut} />
+    <Portal>
+      <MyMapControls mapZoom={z} zoomLevel={map.getZoom()} zoomIn={zoomIn} zoomOut={zoomOut} />
     </Portal>
   );
 };
