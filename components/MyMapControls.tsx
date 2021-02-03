@@ -19,9 +19,10 @@ interface MyMapControlsProps {
   zoomOut: () => void;
   zoomLevel: number;
   mapZoom: (n: number) => void;
+  userLoc: () => void;
 }
 
-const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsProps) => {
+const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom, userLoc }: MyMapControlsProps) => {
   const [showSlider, setShowSlider] = useState(false);
   const [value, setValue] = useState(zoomLevel);
   const ttPlacement = useBreakpointValue({ base: 'right', md: 'left' }) as 'left' | 'right';
@@ -50,7 +51,13 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
       zIndex={999}
     >
       <Tooltip gutter={1.5} label="Your Location" placement={ttPlacement}>
-        <IconButton bgColor="white" aria-label="your location" icon={<MdGpsFixed size={20} />} mb={2} />
+        <IconButton
+          onClick={userLoc}
+          bgColor="white"
+          aria-label="your location"
+          icon={<MdGpsFixed size={20} />}
+          mb={2}
+        />
       </Tooltip>
 
       <Flex direction="column" className="zoomBtnGroup">
@@ -87,7 +94,7 @@ const MyMapControls = ({ zoomIn, zoomOut, zoomLevel, mapZoom }: MyMapControlsPro
         {showSlider ? (
           <Slider
             max={18}
-            min={0}
+            min={1}
             step={1}
             value={value}
             onChange={handleSlider}
